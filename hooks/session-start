@@ -3,6 +3,12 @@
 
 set -euo pipefail
 
+# Allow users to skip superpowers bootstrap injection
+if [ "${SUPERPOWERS_SKIP_BOOTSTRAP:-0}" = "1" ]; then
+    echo '{"hookSpecificOutput":{"hookEventName":"SessionStart","additionalContext":"You have superpowers skills available. Use the Skill tool to invoke them when relevant."}}'
+    exit 0
+fi
+
 # Determine plugin root directory
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]:-$0}")" && pwd)"
 PLUGIN_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
